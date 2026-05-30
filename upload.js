@@ -171,6 +171,7 @@
 
       processedRows.push({
         original: row,
+        shipmentId: shipmentIdx !== -1 ? row[shipmentIdx] : 'SH-' + String(processedRows.length + 1).padStart(3, '0'),
         distanceKm: distanceKm,
         vehicleType: vehicleType || 'default',
         emissionFactor: factor,
@@ -302,45 +303,191 @@
     tableBody.innerHTML = '';
   });
 
-  // ---- Download report (placeholder: generates a simple text summary) ----
+  // ---- PDF report generation ----
+  function getJsPDFConstructor() {
+    if (window.jspdf && window.jspdf.jsPDF) {
+      return window.jspdf.jsPDF;
+    }
+    if (typeof window.jsPDF === 'function') {
+      return window.jsPDF;
+    }
+    return null;
+  }
+
+  function triggerPdfDownload(doc, filename) {
+    // Primary: jsPDF built-in save (real PDF binary download)
+    if (typeof doc.save === 'function') {
+      doc.save(filename);
+      return;
+    }
+
+    // Fallback: blob + anchor download
+    var blob = doc.output('blob');
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  function generatePDFReport(data) {
+    var JsPDF = getJsPDFConstructor();
+    if (!JsPDF) {
+      throw new Error('PDF library not loaded.');
+    }
+
+    var doc = new JsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+    if (typeof doc.autoTable !== 'function') {
+      throw new Error('PDF table plugin not loaded.');
+    }
+
+    var pageWidth = doc.internal.pageSize.getWidth();
+    var pageHeight = doc.internal.pageSize.getHeight();
+    var margin = 20;
+
+    // Header band
+    doc.setFillColor(10, 31, 20);
+    doc.rect(0, 0, pageWidth, 36, 'F');
+
+    // Logo mark
+    doc.setFillColor(34, 197, 94);
+    doc.roundedRect(margin, 10, 14, 14, 2, 2, 'F');
+    doc.setFillColor(10, 31, 20);
+    doc.triangle(margin + 3, 21, margin + 7, 13, margin + 11, 21, 'F');
+    doc.setFillColor(74, 222, 128);
+    doc.circle(margin + 7, 22.5, 1.2, 'F');
+
+    // Title
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(20);
+    doc.text('Green Ledger AI', margin + 18, 17);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(134, 239, 172);
+    doc.text('Carbon Emissions Report', margin + 18, 24);
+
+    // Report date
+    var reportDate = new Date().toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+
+    var startY = 48;
+    doc.setFontSize(10);
+    doc.setTextColor(100, 116, 139);
+    doc.text('Report Date: ' + reportDate, margin, startY);
+
+    // Summary section
+    startY += 12;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(10, 31, 20);
+    doc.text('Executive Summary', margin, startY);
+
+    startY += 8;
+    var cardWidth = (pageWidth - margin * 2 - 10) / 3;
+    var cardHeight = 22;
+    var summaries = [
+      { label: 'Total Shipments', value: formatNumber(data.totalShipments, 0) },
+      { label: 'Total Distance', value: formatNumber(data.totalDistance, 1) + ' km' },
+      { label: 'Total CO2 Emissions', value: formatNumber(data.totalCo2, 1) + ' kg CO2e' }
+    ];
+
+    summaries.forEach(function (item, i) {
+      var x = margin + i * (cardWidth + 5);
+      doc.setFillColor(240, 253, 244);
+      doc.setDrawColor(34, 197, 94);
+      doc.roundedRect(x, startY, cardWidth, cardHeight, 2, 2, 'FD');
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(100, 116, 139);
+      doc.text(item.label, x + 4, startY + 8);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(10, 31, 20);
+      if (i === 2) {
+        doc.setTextColor(22, 163, 74);
+      }
+      doc.text(item.value, x + 4, startY + 17);
+    });
+
+    // Shipment table
+    var tableBody = data.rows.map(function (row) {
+      return [
+        row.shipmentId,
+        formatNumber(row.distanceKm, 1),
+        row.vehicleType,
+        formatNumber(row.co2, 2)
+      ];
+    });
+
+    doc.autoTable({
+      startY: startY + cardHeight + 14,
+      margin: { left: margin, right: margin },
+      head: [['Shipment ID', 'Distance (km)', 'Vehicle Type', 'CO2 (kg)']],
+      body: tableBody,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [10, 31, 20],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 9,
+        cellPadding: 4
+      },
+      bodyStyles: {
+        fontSize: 9,
+        textColor: [30, 41, 59],
+        cellPadding: 3.5
+      },
+      alternateRowStyles: {
+        fillColor: [240, 253, 244]
+      },
+      columnStyles: {
+        0: { cellWidth: 40 },
+        1: { halign: 'right' },
+        2: { cellWidth: 35 },
+        3: { halign: 'right', fontStyle: 'bold', textColor: [22, 163, 74] }
+      },
+      didDrawPage: function () {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(148, 163, 184);
+        doc.text(
+          'Generated by Green Ledger AI',
+          pageWidth / 2,
+          pageHeight - 10,
+          { align: 'center' }
+        );
+      }
+    });
+
+    triggerPdfDownload(doc, 'GreenLedger_Report.pdf');
+  }
+
   downloadReportBtn.addEventListener('click', function () {
     if (!currentReport) return;
 
-    var lines = [
-      'GREEN LEDGER AI — EMISSIONS REPORT (DEMO)',
-      'Generated: ' + new Date().toISOString(),
-      '',
-      'SUMMARY',
-      '-------',
-      'Total Distance: ' + formatNumber(currentReport.totalDistance, 1) + ' km',
-      'Total Shipments: ' + formatNumber(currentReport.totalShipments, 0),
-      'Estimated CO₂ Emissions: ' + formatNumber(currentReport.totalCo2, 1) + ' kg CO₂e',
-      '',
-      'METHODOLOGY',
-      '-----------',
-      'Emission factors (kg CO₂e/km): HGV 0.89 | Van 0.31 | Rail 0.03 | Default 0.62',
-      '',
-      'SHIPMENT DETAIL',
-      '---------------'
-    ];
+    var originalText = downloadReportBtn.textContent;
+    downloadReportBtn.disabled = true;
+    downloadReportBtn.textContent = 'Generating PDF…';
 
-    currentReport.rows.forEach(function (row, i) {
-      lines.push(
-        'Row ' + (i + 1) + ': ' + formatNumber(row.distanceKm, 1) + ' km × ' +
-        row.emissionFactor + ' = ' + formatNumber(row.co2, 2) + ' kg CO₂e'
-      );
-    });
-
-    lines.push('', '— End of report —', 'Full PDF reports coming soon.');
-
-    var blob = new Blob([lines.join('\n')], { type: 'text/plain' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'green-ledger-emissions-report.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    try {
+      generatePDFReport(currentReport);
+    } catch (err) {
+      alert('Could not generate PDF: ' + err.message + '\n\nMake sure you are online so jsPDF can load, then refresh and try again.');
+    } finally {
+      downloadReportBtn.disabled = false;
+      downloadReportBtn.textContent = originalText;
+    }
   });
 })();

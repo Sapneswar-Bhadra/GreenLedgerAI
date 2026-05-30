@@ -102,7 +102,7 @@
 
         <!-- Actions -->
         <section class="report-actions">
-          <p class="report-note">Emission factors based on simplified DEFRA-style road freight averages (HGV: 0.89, Van: 0.31, Default: 0.62 kg CO₂e/km).</p>
+          <p class="report-note">Emission factors based on simplified DEFRA-style road freight averages (HGV: 0.89, Van: 0.31, Default: 0.62 kg CO₂e/km). Download a professional PDF report for your records.</p>
           <button type="button" class="btn btn-primary btn-lg" id="downloadReportBtn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -123,6 +123,8 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
   <script src="upload.js"></script>
 </body>
 </html>
