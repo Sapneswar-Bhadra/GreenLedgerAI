@@ -229,7 +229,13 @@
             <h2 class="section-title">Join the waitlist</h2>
             <p class="section-desc">Be among the first logistics companies to automate carbon reporting. Founding partners get lifetime discount pricing.</p>
           </div>
-          <form class="waitlist-form" id="waitlistForm" novalidate>
+          <form
+            class="waitlist-form"
+            id="waitlistForm"
+            action="https://formspree.io/f/xnjrynyr"
+            method="POST"
+            novalidate
+          >
             <div class="form-group">
               <label for="email" class="visually-hidden">Email address</label>
               <input
@@ -252,7 +258,8 @@
                 autocomplete="organization"
               >
             </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-full">Join Waitlist</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-full" id="waitlistSubmit">Join Waitlist</button>
+            <p class="form-error" id="formError" role="alert" hidden>Something went wrong. Please try again.</p>
             <p class="form-note">No spam. Unsubscribe anytime. We respect your privacy.</p>
           </form>
           <div class="form-success" id="formSuccess" hidden>

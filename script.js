@@ -38,11 +38,16 @@
     });
   });
 
-  // ---- Waitlist form handling ----
+  // ---- Waitlist form (Formspree) ----
   const waitlistForm = document.getElementById('waitlistForm');
+  const FORMSPREE_ENDPOINT = waitlistForm.getAttribute('action');
   const formSuccess = document.getElementById('formSuccess');
+  const formError = document.getElementById('formError');
+  const submitBtn = document.getElementById('waitlistSubmit');
   const emailInput = document.getElementById('email');
   const companyInput = document.getElementById('company');
+
+  const submitBtnDefaultText = submitBtn.textContent;
 
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -56,9 +61,15 @@
   function clearErrors() {
     emailInput.classList.remove('error');
     companyInput.classList.remove('error');
+    formError.hidden = true;
   }
 
-  waitlistForm.addEventListener('submit', function (e) {
+  function setSubmitting(isSubmitting) {
+    submitBtn.disabled = isSubmitting;
+    submitBtn.textContent = isSubmitting ? 'Joining…' : submitBtnDefaultText;
+  }
+
+  waitlistForm.addEventListener('submit', async function (e) {
     e.preventDefault();
     clearErrors();
 
@@ -75,18 +86,35 @@
       return;
     }
 
-    // Store submission locally (replace with API call in production)
-    const submissions = JSON.parse(localStorage.getItem('greenledger_waitlist') || '[]');
-    submissions.push({
-      email: email,
-      company: company,
-      timestamp: new Date().toISOString()
-    });
-    localStorage.setItem('greenledger_waitlist', JSON.stringify(submissions));
+    setSubmitting(true);
 
-    // Show success state
-    waitlistForm.hidden = true;
-    formSuccess.hidden = false;
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          company: company,
+          _subject: 'Green Ledger AI — New waitlist signup',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        waitlistForm.hidden = true;
+        formSuccess.hidden = false;
+        return;
+      }
+
+      throw new Error(data.error || 'Submission failed');
+    } catch (err) {
+      formError.hidden = false;
+      setSubmitting(false);
+    }
   });
 
   // Clear error styling on input

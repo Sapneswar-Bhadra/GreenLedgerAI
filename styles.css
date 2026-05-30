@@ -778,6 +778,24 @@ ul {
   text-align: center;
 }
 
+.form-error {
+  font-size: 0.875rem;
+  color: #f87171;
+  text-align: center;
+  margin: 0;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 .form-success {
   text-align: center;
   padding: 32px;
