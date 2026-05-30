@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Green Ledger AI — Upload logistics data and estimate CO₂ emissions in minutes.">
+  <title>Upload Demo — Green Ledger AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="upload.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">
+        <span class="logo-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="currentColor"/>
+            <path d="M8 22L16 10L24 22H8Z" fill="#0a1f14"/>
+            <circle cx="16" cy="24" r="2" fill="#4ade80"/>
+          </svg>
+        </span>
+        Green Ledger AI
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#benefits">Benefits</a></li>
+        <li><a href="index.html#waitlist">Waitlist</a></li>
+      </ul>
+      <a href="index.html#waitlist" class="btn btn-primary nav-cta">Join Waitlist</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="upload-page">
+    <div class="upload-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="upload-header">
+        <span class="section-tag">Demo</span>
+        <h1 class="upload-title">Upload Logistics Data</h1>
+        <p class="upload-subtitle">Upload a CSV of shipments to see estimated CO₂ emissions calculated instantly in your browser.</p>
+      </div>
+
+      <!-- Upload zone -->
+      <section class="upload-card" id="uploadSection">
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="csvInput" accept=".csv,text/csv" class="visually-hidden">
+          <div class="upload-zone-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <p class="upload-zone-title">Drop your CSV here or click to browse</p>
+          <p class="upload-zone-hint">Required columns: <code>distance_km</code> (or <code>distance</code>). Optional: <code>vehicle_type</code>, <code>shipment_id</code></p>
+          <button type="button" class="btn btn-primary" id="browseBtn">Upload CSV File</button>
+        </div>
+        <p class="upload-error" id="uploadError" role="alert" hidden></p>
+      </section>
+
+      <!-- Results (hidden until upload) -->
+      <div id="resultsPanel" hidden>
+        <!-- Summary metrics -->
+        <section class="metrics-grid" aria-label="Emissions summary">
+          <article class="metric-card-upload">
+            <span class="metric-card-label">Total Distance</span>
+            <span class="metric-card-value" id="totalDistance">—</span>
+            <span class="metric-card-unit">kilometres</span>
+          </article>
+          <article class="metric-card-upload">
+            <span class="metric-card-label">Total Shipments</span>
+            <span class="metric-card-value" id="totalShipments">—</span>
+            <span class="metric-card-unit">shipments</span>
+          </article>
+          <article class="metric-card-upload metric-card-upload--highlight">
+            <span class="metric-card-label">Estimated CO₂ Emissions</span>
+            <span class="metric-card-value" id="totalCo2">—</span>
+            <span class="metric-card-unit">kg CO₂e</span>
+          </article>
+        </section>
+
+        <!-- Data table -->
+        <section class="table-section">
+          <div class="table-section-header">
+            <h2>Shipment Data</h2>
+            <button type="button" class="btn btn-secondary btn-sm" id="uploadAnotherBtn">Upload another file</button>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="dataTable">
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Actions -->
+        <section class="report-actions">
+          <p class="report-note">Emission factors based on simplified DEFRA-style road freight averages (HGV: 0.89, Van: 0.31, Default: 0.62 kg CO₂e/km).</p>
+          <button type="button" class="btn btn-primary btn-lg" id="downloadReportBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download Report
+          </button>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer footer-compact">
+    <div class="footer-bottom container">
+      <p>&copy; 2026 Green Ledger AI. All rights reserved.</p>
+      <p class="footer-location"><a href="index.html">← Back to homepage</a></p>
+    </div>
+  </footer>
+
+  <script src="upload.js"></script>
+</body>
+</html>
