@@ -131,7 +131,7 @@
   };
 
   const fadeElements = document.querySelectorAll(
-    '.feature-card, .benefits-list li, .testimonial-card, .waitlist-card'
+    '.feature-card, .why-card, .benefits-list li, .waitlist-card'
   );
 
   fadeElements.forEach(function (el) {

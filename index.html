@@ -25,6 +25,7 @@
         Green Ledger AI
       </a>
       <ul class="nav-links" id="navLinks">
+        <li><a href="#why">Why Us</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#benefits">Benefits</a></li>
         <li><a href="#waitlist">Waitlist</a></li>
@@ -77,27 +78,138 @@
               <span></span><span></span><span></span>
             </div>
             <span class="dashboard-title">Emissions Dashboard</span>
+            <span class="dashboard-live">Live</span>
           </div>
           <div class="dashboard-body">
-            <div class="metric-card">
-              <span class="metric-label">Total CO₂e (Q1 2026)</span>
-              <span class="metric-value">1,247 <small>t</small></span>
-              <span class="metric-change positive">↓ 12% vs last quarter</span>
+            <div class="dashboard-metrics">
+              <div class="metric-card metric-card--primary">
+                <span class="metric-label">Total CO₂e (Q1 2026)</span>
+                <span class="metric-value">1,247 <small>t</small></span>
+                <span class="metric-change positive">↓ 12% vs last quarter</span>
+              </div>
+              <div class="metric-card metric-card--compact">
+                <span class="metric-label">Shipments</span>
+                <span class="metric-value metric-value--sm">3,842</span>
+              </div>
+              <div class="metric-card metric-card--compact">
+                <span class="metric-label">Avg / shipment</span>
+                <span class="metric-value metric-value--sm">0.32 <small>t</small></span>
+              </div>
             </div>
-            <div class="chart-placeholder">
-              <div class="chart-bar" style="--h: 60%"></div>
-              <div class="chart-bar" style="--h: 85%"></div>
-              <div class="chart-bar" style="--h: 45%"></div>
-              <div class="chart-bar" style="--h: 70%"></div>
-              <div class="chart-bar" style="--h: 55%"></div>
-              <div class="chart-bar" style="--h: 90%"></div>
+            <div class="chart-panel">
+              <div class="chart-panel-header">
+                <div>
+                  <h3 class="chart-title">Monthly emissions</h3>
+                  <p class="chart-subtitle">Tonnes CO₂e by month</p>
+                </div>
+                <span class="chart-legend">
+                  <span class="chart-legend-item"><span class="legend-swatch legend-swatch--1"></span> Road</span>
+                  <span class="chart-legend-item"><span class="legend-swatch legend-swatch--3"></span> Mixed</span>
+                </span>
+              </div>
+              <div class="chart-container">
+                <div class="chart-y-axis" aria-hidden="true">
+                  <span>1.4k</span>
+                  <span>1.0k</span>
+                  <span>600</span>
+                  <span>200</span>
+                  <span>0</span>
+                </div>
+                <div class="chart-area">
+                  <div class="chart-grid" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <div class="chart-bars">
+                    <div class="chart-bar-wrap">
+                      <div class="chart-bar chart-bar--1" style="--h: 60%" title="Oct"></div>
+                      <span class="chart-bar-label">Oct</span>
+                    </div>
+                    <div class="chart-bar-wrap">
+                      <div class="chart-bar chart-bar--2" style="--h: 85%" title="Nov"></div>
+                      <span class="chart-bar-label">Nov</span>
+                    </div>
+                    <div class="chart-bar-wrap">
+                      <div class="chart-bar chart-bar--3" style="--h: 45%" title="Dec"></div>
+                      <span class="chart-bar-label">Dec</span>
+                    </div>
+                    <div class="chart-bar-wrap">
+                      <div class="chart-bar chart-bar--4" style="--h: 70%" title="Jan"></div>
+                      <span class="chart-bar-label">Jan</span>
+                    </div>
+                    <div class="chart-bar-wrap">
+                      <div class="chart-bar chart-bar--5" style="--h: 55%" title="Feb"></div>
+                      <span class="chart-bar-label">Feb</span>
+                    </div>
+                    <div class="chart-bar-wrap">
+                      <div class="chart-bar chart-bar--6" style="--h: 90%" title="Mar"></div>
+                      <span class="chart-bar-label">Mar</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="dashboard-rows">
-              <div class="dashboard-row"><span>Road freight</span><span>842 t</span></div>
-              <div class="dashboard-row"><span>Warehousing</span><span>285 t</span></div>
-              <div class="dashboard-row"><span>Last-mile delivery</span><span>120 t</span></div>
+            <div class="dashboard-breakdown">
+              <h3 class="breakdown-title">By category</h3>
+              <div class="dashboard-rows">
+                <div class="dashboard-row">
+                  <span class="row-label"><span class="row-dot row-dot--1"></span>Road freight</span>
+                  <span class="row-value">842 t</span>
+                  <span class="row-bar"><span class="row-bar-fill row-bar-fill--1" style="--w: 68%"></span></span>
+                </div>
+                <div class="dashboard-row">
+                  <span class="row-label"><span class="row-dot row-dot--2"></span>Warehousing</span>
+                  <span class="row-value">285 t</span>
+                  <span class="row-bar"><span class="row-bar-fill row-bar-fill--2" style="--w: 23%"></span></span>
+                </div>
+                <div class="dashboard-row">
+                  <span class="row-label"><span class="row-dot row-dot--3"></span>Last-mile delivery</span>
+                  <span class="row-value">120 t</span>
+                  <span class="row-bar"><span class="row-bar-fill row-bar-fill--3" style="--w: 10%"></span></span>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Logistics Companies Use Green Ledger AI -->
+    <section class="why section" id="why">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Why Us</span>
+          <h2 class="section-title">Why Logistics Companies Use Green Ledger AI</h2>
+          <p class="section-desc">Built for operators who need credible carbon data fast — without adding headcount or consultants.</p>
+        </div>
+        <div class="why-grid">
+          <article class="why-card">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Calculate shipment emissions in minutes</h3>
+            <p>Upload operational CSV data and get distance-based CO₂ estimates in one session — not weeks of manual work.</p>
+          </article>
+          <article class="why-card">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3>Generate audit-ready PDF reports</h3>
+            <p>Download professional emissions summaries with shipment detail — formatted for clients, tenders, and internal review.</p>
+          </article>
+          <article class="why-card">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3>Prepare for ESG and customer requests</h3>
+            <p>Respond to retailer questionnaires, Scope 3 audits, and supply-chain sustainability reviews with structured output.</p>
+          </article>
+          <article class="why-card">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+            </div>
+            <h3>No sustainability consultant required</h3>
+            <p>Skip five-figure advisory fees. Your ops team keeps control of the data and the reporting workflow.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -160,61 +272,46 @@
     <!-- Benefits Section -->
     <section class="benefits section" id="benefits">
       <div class="container">
-        <div class="benefits-layout">
-          <div class="benefits-content">
-            <span class="section-tag">Why Green Ledger AI</span>
+        <div class="benefits-inner">
+          <div class="section-header">
+            <span class="section-tag">Benefits</span>
             <h2 class="section-title">Win contracts. Stay compliant. Cut emissions.</h2>
             <p class="section-desc">Large shippers increasingly require carbon data from their logistics partners. Green Ledger AI helps you respond in hours, not weeks.</p>
-            <ul class="benefits-list">
-              <li>
-                <span class="check-icon" aria-hidden="true">✓</span>
-                <div>
-                  <strong>Win more RFPs</strong>
-                  <p>Respond to sustainability requirements from Tesco, Amazon, and major European retailers with professional reports.</p>
-                </div>
-              </li>
-              <li>
-                <span class="check-icon" aria-hidden="true">✓</span>
-                <div>
-                  <strong>Avoid compliance penalties</strong>
-                  <p>Meet UK SECR reporting obligations and prepare for EU CSRD supply chain requirements ahead of deadlines.</p>
-                </div>
-              </li>
-              <li>
-                <span class="check-icon" aria-hidden="true">✓</span>
-                <div>
-                  <strong>Reduce fuel costs</strong>
-                  <p>Identify inefficient routes and idle time. Operators typically find 8–15% savings opportunities in their first report.</p>
-                </div>
-              </li>
-              <li>
-                <span class="check-icon" aria-hidden="true">✓</span>
-                <div>
-                  <strong>No consultants needed</strong>
-                  <p>Skip the £10k+ sustainability consultant fees. Get the same quality output at a fraction of the cost.</p>
-                </div>
-              </li>
-            </ul>
           </div>
-          <div class="benefits-visual">
-            <div class="testimonial-card">
-              <div class="quote-mark" aria-hidden="true">"</div>
-              <blockquote>
-                <p>We used to spend two weeks every quarter pulling together emissions data for our biggest client. With Green Ledger AI, it's done before lunch on Monday.</p>
-              </blockquote>
-              <footer class="testimonial-author">
-                <div class="author-avatar">JM</div>
-                <div>
-                  <cite>James Mitchell</cite>
-                  <span>Operations Director, Mitchell Haulage Ltd — Birmingham, UK</span>
-                </div>
-              </footer>
-            </div>
-            <div class="trust-badges">
-              <span>GHG Protocol</span>
-              <span>DEFRA Factors</span>
-              <span>ISO 14064</span>
-            </div>
+          <ul class="benefits-list">
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <div>
+                <strong>Win more RFPs</strong>
+                <p>Respond to sustainability requirements from major retailers and manufacturers with professional reports.</p>
+              </div>
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <div>
+                <strong>Avoid compliance penalties</strong>
+                <p>Meet UK SECR reporting obligations and prepare for EU CSRD supply chain requirements ahead of deadlines.</p>
+              </div>
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <div>
+                <strong>Reduce fuel costs</strong>
+                <p>Identify inefficient routes and idle time. Operators typically find savings opportunities in their first report.</p>
+              </div>
+            </li>
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
+              <div>
+                <strong>No consultants needed</strong>
+                <p>Skip the £10k+ sustainability consultant fees. Get credible output at a fraction of the cost.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="trust-badges trust-badges--centered">
+            <span>GHG Protocol</span>
+            <span>DEFRA Factors</span>
+            <span>ISO 14064</span>
           </div>
         </div>
       </div>
@@ -236,6 +333,9 @@
             method="POST"
             novalidate
           >
+            <p class="waitlist-disclaimer" role="note">
+              Demo calculator for estimation purposes only. Green Ledger AI does not verify uploaded shipment data. Official carbon reports require source document validation.
+            </p>
             <div class="form-group">
               <label for="email" class="visually-hidden">Email address</label>
               <input
@@ -292,6 +392,7 @@
         <div class="footer-col">
           <h4>Product</h4>
           <ul>
+            <li><a href="#why">Why Us</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#benefits">Benefits</a></li>
             <li><a href="#waitlist">Pricing</a></li>
